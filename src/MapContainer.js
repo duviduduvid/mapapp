@@ -5,13 +5,14 @@ import * as googleApiKey from './googleApiKey.json';
 const style = {
   margin: '10px'
 };
+
 const initialCenter = { 
   lat: 32.154, 
   lng: 53.834 
 };
 
 const MapContainer = ({ google }) => {
-  const [places, setPlaces] = useState(JSON.parse(localStorage.getItem('selectedPlaces')) || []);
+  const [places, setPlaces] = useState(getPlacesFromStorage());
 
   const addPlace = (mapProps, map, clickEvent) => {
     const { latLng } = clickEvent;
@@ -19,8 +20,7 @@ const MapContainer = ({ google }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem('selectedPlaces', JSON.stringify(places));
-    console.log(places);
+    setPlacesToStorage(places);
   }, [places])
 
   return (
@@ -37,6 +37,12 @@ const MapContainer = ({ google }) => {
     </Map>
   );
 };
+
+const getPlacesFromStorage = () => 
+  JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+
+const setPlacesToStorage = places => 
+  localStorage.setItem('selectedPlaces', JSON.stringify(places));
 
 export default GoogleApiWrapper({
   apiKey: googleApiKey.key
