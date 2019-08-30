@@ -27,6 +27,7 @@ const MapContainer = ({ google }) => {
     <Map
       google={google}
       zoom={3}
+      minZoom={1}
       style={style}
       initialCenter={initialCenter}
       onClick={addPlace}
