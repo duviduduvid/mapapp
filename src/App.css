@@ -1,3 +1,9 @@
 .main-container {
   display: flex;
+  position: absolute;
+}
+
+.map-container {
+  width: 1000px;
+  height: 750px;
 }
