@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { getPlacesFromStorage, setPlacesToStorage } from './local-storage-service';
 import * as googleApiKey from './googleApiKey.json';
 
 const style = {
@@ -32,18 +33,12 @@ const MapContainer = ({ google }) => {
       initialCenter={initialCenter}
       onClick={addPlace}
     > 
-    {places.map((place, index) => 
-      <Marker key={index} position={place}/>
-    )}
+      {places.map((place, index) => 
+        <Marker key={index} position={place}/>
+      )}
     </Map>
   );
 };
-
-const getPlacesFromStorage = () => 
-  JSON.parse(localStorage.getItem('selectedPlaces')) || [];
-
-const setPlacesToStorage = places => 
-  localStorage.setItem('selectedPlaces', JSON.stringify(places));
 
 export default GoogleApiWrapper({
   apiKey: googleApiKey.key
