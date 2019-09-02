@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
-import { addPlace } from './actions/action';
-import * as googleApiKey from './googleApiKey.json';
+import { addPlace } from '../../actions/action';
+import * as googleApiKey from '../../googleApiKey.json';
 
 const style = {
   margin: '10px'

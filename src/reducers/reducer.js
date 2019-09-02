@@ -1,5 +1,5 @@
 import { ADD_PLACE } from '../actions/actions-types';
-import { getPlacesFromStorage, setPlacesToStorage } from '../local-storage-service';
+import { getPlacesFromStorage, setPlacesToStorage } from '../services/local-storage-service';
 
 export const initialState = {
   places: getPlacesFromStorage()

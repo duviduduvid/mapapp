@@ -1,6 +1,6 @@
 import React from 'react';
-import MapContainer from './MapContainer';
-import SideBar from './SideBar';
+import MapContainer from '../MapContainer/MapContainer';
+import SideBar from '../SideBar/SideBar';
 import './App.css';
 
 function App() {
