@@ -1,13 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const style = {
   margin: '10px'
 };
 
-const SideBar = () => {
+const SideBar = ({ places }) => {
   return (
-    <h1 style={style}>My Favourite Places</h1>
+    <div style={style}>
+      <h1>My Favourite Places</h1>
+      <ul>
+        {places.map((place, index) => 
+          <li key={index}>{place.name}</li>
+        )}
+      </ul>
+    </div>
+    
   );
 }
 
-export default SideBar;
+const mapStateToProps = store => ({
+  places: store.places
+});
+
+export default connect(
+  mapStateToProps
+)(SideBar);
