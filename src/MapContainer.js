@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
-import { getPlacesFromStorage, setPlacesToStorage } from './local-storage-service';
+import { addPlace } from './actions/action';
 import * as googleApiKey from './googleApiKey.json';
 
 const style = {
@@ -12,17 +13,32 @@ const initialCenter = {
   lng: 53.834 
 };
 
-const MapContainer = ({ google }) => {
-  const [places, setPlaces] = useState(getPlacesFromStorage());
+const MapContainer = ({ google, places, addPlace }) => {
+  const geocoder = new google.maps.Geocoder();
 
-  const addPlace = (mapProps, map, clickEvent) => {
+  const addNewPlace = (mapProps, map, clickEvent) => {
     const { latLng } = clickEvent;
-    setPlaces([...places, {lat: latLng.lat(), lng: latLng.lng()}]);
+    geocoder.geocode({'location': latLng}, results => {
+      try {
+        const placeName = results
+          .find(place => place.types.includes('locality'))
+          .address_components[0]
+          .long_name;
+        
+        const newPlace = {
+          name: placeName,
+          location: {
+            lat: latLng.lat(), 
+            lng: latLng.lng()
+          }
+        };
+        addPlace(newPlace);
+      }
+      catch (e) {
+        alert('No city found in the place you clicked on...');
+      }
+    });
   };
-
-  useEffect(() => {
-    setPlacesToStorage(places);
-  }, [places])
 
   return (
     <Map
@@ -31,15 +47,30 @@ const MapContainer = ({ google }) => {
       minZoom={1}
       style={style}
       initialCenter={initialCenter}
-      onClick={addPlace}
+      onClick={addNewPlace}
     > 
       {places.map((place, index) => 
-        <Marker key={index} position={place}/>
+        <Marker key={index} position={place.location}/>
       )}
     </Map>
   );
 };
 
-export default GoogleApiWrapper({
+const mapStateToProps = state => ({
+  places: state.places
+});
+
+const mapDispatchToProps = dispatch => ({
+  addPlace: place => {
+    dispatch(addPlace(place));
+  }
+});
+
+const Wrapper = GoogleApiWrapper({
   apiKey: googleApiKey.key
 })(MapContainer);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Wrapper);
