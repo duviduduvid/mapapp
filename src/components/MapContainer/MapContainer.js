@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { addPlace } from '../../actions/action';
 import * as googleApiKey from '../../googleApiKey.json';
 
@@ -15,9 +15,11 @@ const initialCenter = {
 
 const MapContainer = ({ google, places, addPlace }) => {
   const geocoder = new google.maps.Geocoder();
+  const  [activeMarker, setActiveMarker] = useState({});
 
   const addNewPlace = (mapProps, map, clickEvent) => {
     const { latLng } = clickEvent;
+    setActiveMarker({});
     geocoder.geocode({'location': latLng}, results => {
       try {
         const placeName = results
@@ -40,6 +42,10 @@ const MapContainer = ({ google, places, addPlace }) => {
     });
   };
 
+  const onMarkerClick = (props, marker) => {
+    setActiveMarker(marker);
+  };
+
   return (
     <Map
       google={google}
@@ -50,8 +56,19 @@ const MapContainer = ({ google, places, addPlace }) => {
       onClick={addNewPlace}
     > 
       {places.map((place, index) => 
-        <Marker key={index} position={place.location}/>
+        <Marker 
+          key={index} 
+          name={place.name} 
+          position={place.location}
+          onClick={onMarkerClick}
+        />
       )}
+
+      <InfoWindow 
+        marker={activeMarker}
+        visible={!!activeMarker.name}>
+        <p>{activeMarker.name}</p>
+      </InfoWindow>
     </Map>
   );
 };
