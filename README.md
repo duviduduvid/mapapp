@@ -1,4 +1,4 @@
-This is a small React app using Google Maps API.
+This is a small React app using Google Maps API.<br>
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
