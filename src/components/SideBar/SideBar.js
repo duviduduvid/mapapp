@@ -1,21 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { removePlace } from '../../actions/action';
+import PlaceListItem from '../PlaceListItem/PlaceListItem';
+import './SideBar.css';
 
-const style = {
-  margin: '10px'
-};
-
-const SideBar = ({ places }) => {
+const SideBar = ({ places, removePlace }) => {
   return (
-    <div style={style}>
+    <div className="sidebar-container">
       <h1>My Favourite Places</h1>
       <ul>
         {places.map((place, index) => 
-          <li key={index}>{place.name}</li>
+          <PlaceListItem 
+            key={index} 
+            place={place}
+            removeItem={removePlace}
+          />
         )}
       </ul>
     </div>
-    
   );
 }
 
@@ -23,6 +25,13 @@ const mapStateToProps = store => ({
   places: store.places
 });
 
+const mapDispatchToProps = dispatch => ({
+  removePlace: place => {
+    dispatch(removePlace(place));
+  }
+});
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(SideBar);
