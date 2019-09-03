@@ -8,6 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * npm install
 * npm start
 
+Notice that in order to run the app you should first get a Google Maps API key on https://cloud.google.com/maps-platform/#get-started.
 
 ## Available Scripts
 
