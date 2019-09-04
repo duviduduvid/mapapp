@@ -1,4 +1,4 @@
-This is a small React app using Google Maps API.<br>
+This is a small React app using Google Maps API, inspired by [this article](https://itnext.io/why-every-beginner-front-end-developer-should-know-publish-subscribe-pattern-72a12cd68d44).<br>
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
