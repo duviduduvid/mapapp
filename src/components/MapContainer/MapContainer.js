@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { addPlace } from '../../actions/action';
+import { addPlaceToStorage } from '../../services/local-storage-service';
 import * as googleApiKey from '../../googleApiKey.json';
 
 const style = {
@@ -35,6 +36,7 @@ const MapContainer = ({ google, places, addPlace }) => {
           }
         };
         addPlace(newPlace);
+        addPlaceToStorage(newPlace);
       }
       catch (e) {
         alert('No city found in the place you clicked on...');

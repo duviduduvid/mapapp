@@ -1,5 +1,5 @@
 import { ADD_PLACE, REMOVE_PLACE } from '../actions/actions-types';
-import { getPlacesFromStorage, setPlacesToStorage } from '../services/local-storage-service';
+import getPlacesFromStorage from '../services/local-storage-service';
 
 export const initialState = {
   places: getPlacesFromStorage()
@@ -13,12 +13,10 @@ function reducer(state = initialState, action) {
 
     case ADD_PLACE: 
       places.push(placeActedUpon);
-      setPlacesToStorage(places);
       return {places};
 
     case REMOVE_PLACE:
       places = places.filter(place => place.name !== placeActedUpon.name);
-      setPlacesToStorage(places);
       return {places};
 
     default: 

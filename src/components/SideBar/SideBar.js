@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { removePlace } from '../../actions/action';
+import { removePlaceFromStorage } from '../../services/local-storage-service'; 
 import PlaceListItem from '../PlaceListItem/PlaceListItem';
 import './SideBar.css';
 
@@ -28,6 +29,7 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch => ({
   removePlace: place => {
     dispatch(removePlace(place));
+    removePlaceFromStorage(place);
   }
 });
 
